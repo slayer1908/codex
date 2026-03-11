@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apexads-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: apexads-backend
+  template:
+    metadata:
+      labels:
+        app: apexads-backend
+    spec:
+      containers:
+        - name: backend
+          image: apexads/backend:latest
+          ports:
+            - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apexads-backend
+spec:
+  selector:
+    app: apexads-backend
+  ports:
+    - port: 8000
+      targetPort: 8000
